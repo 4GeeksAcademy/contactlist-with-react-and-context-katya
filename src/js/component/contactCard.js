@@ -12,7 +12,7 @@ export const ContactCard = () => {
             src={store.contact[0].photo}
             className="img-fluid rounded-circle m-3"
             alt="..."
-            style={{height: "150px"}}
+            style={{ height: "150px" }}
           />
         </div>
         <div className="col-md-6">
