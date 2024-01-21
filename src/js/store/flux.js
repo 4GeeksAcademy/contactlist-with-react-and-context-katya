@@ -12,6 +12,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
+			],
+			contacts: [],
+			contact: [
+				{
+					name: "Katya",
+					email: "email@email.com",
+					phone: "7777777777"
+				}
 			]
 		},
 		actions: {
@@ -23,6 +31,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
+				fetch("https://playground.4geeks.com/apis/fake/contact/agenda")
+				.then((response) => {
+					if(!response.ok) {
+						throw Error(response.status);
+					}
+					return response.json();
+				}) 
+				.then(data => setStore({"contacts": data}))
+				.catch((error) => {
+					console.log(error)
+				})
 			},
 			changeColor: (index, color) => {
 				//get the store
