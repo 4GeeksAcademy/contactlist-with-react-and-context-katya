@@ -10,7 +10,7 @@ export const ContactCard = (props) => {
       <div className="row g-0">
         <div className="col-md-4 d-flex justify-content-center">
           <img
-            src={store.contact[0].photo}
+            src={store.photo}
             className="img-fluid rounded-circle m-3"
             alt="..."
             style={{ height: "150px" }}

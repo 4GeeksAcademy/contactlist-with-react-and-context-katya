@@ -2,16 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       contacts: [],
-      contact: [
-        {
-          name: "Helen Anamendolla",
-          email: "helen.ana@example.com",
-          phone: "(870) 288-4149",
-          address: "5842 Hillcrest Rd",
-          photo:
-            "https://img.freepik.com/premium-photo/closeup-portrait-model-with-dramatic-lighting-melancholic-expressions-ai-generated_834670-164.jpg",
-        },
-      ],
+      photo:
+        "https://img.freepik.com/premium-photo/closeup-portrait-model-with-dramatic-lighting-melancholic-expressions-ai-generated_834670-164.jpg",
       inputs: [
         {
           inputName: "",
@@ -40,15 +32,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       addContact: () => {
-        
         fetch("https://playground.4geeks.com/apis/fake/contact/", {
           method: "POST",
           body: {
-            "full_name": store.inputs[0].inputName,
-            "email": store.inputs[0].inputEmail,
-            "agenda_slug": "agenda_katya",
-            "address": store.inputs[0].inputAddress,
-            "phone": store.inputs[0].inputPhone,
+            full_name: store.inputs[0].inputName,
+            email: store.inputs[0].inputEmail,
+            agenda_slug: "agenda_katya",
+            address: store.inputs[0].inputAddress,
+            phone: store.inputs[0].inputPhone,
           },
           headers: {
             "Content-Type": "application/json",
@@ -74,7 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       setStore: (newState) => {
         setStore(newState);
       },
-    }
+    },
   };
 };
 
