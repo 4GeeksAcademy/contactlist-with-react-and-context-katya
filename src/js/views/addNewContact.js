@@ -13,17 +13,7 @@ export const AddNewContact = () => {
   const [address, setAddress] = useState("");
 
   function saveContact() {
-
-    actions.setStore({
-      inputs: {
-        inputName: name,
-        inputEmail: email,
-        inputPhone: phone,
-        inputAddress: address,
-      },
-    });
-
-    actions.addContact();
+    actions.addContact(name, email, phone, address);
   }
 
   return (

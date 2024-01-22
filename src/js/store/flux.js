@@ -2,16 +2,9 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       contacts: [],
+
       photo:
         "https://img.freepik.com/premium-photo/closeup-portrait-model-with-dramatic-lighting-melancholic-expressions-ai-generated_834670-164.jpg",
-      inputs: [
-        {
-          inputName: "",
-          inputEmail: "",
-          inputPhone: "",
-          inputAddress: "",
-        },
-      ],
     },
 
     actions: {
@@ -31,16 +24,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
 
-      addContact: () => {
+      addContact: (name, email, phone, address) => {
         fetch("https://playground.4geeks.com/apis/fake/contact/", {
           method: "POST",
-          body: {
-            full_name: store.inputs[0].inputName,
-            email: store.inputs[0].inputEmail,
+          body: JSON.stringify({
+            full_name: name,
+            email: email,
             agenda_slug: "agenda_katya",
-            address: store.inputs[0].inputAddress,
-            phone: store.inputs[0].inputPhone,
-          },
+            address: address,
+            phone: phone,
+          }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -50,6 +43,21 @@ const getState = ({ getStore, getActions, setStore }) => {
               throw Error(response.status);
             }
             return response.json();
+          })
+          .then(() => {
+            
+            const store = getStore();
+            setStore({
+              contacts: store.contacts.concat([
+                {
+                  full_name: name,
+                  email: email,
+                  agenda_slug: "agenda_katya",
+                  address: address,
+                  phone: phone,
+                },
+              ]),
+            });
           })
           .catch((error) => console.log(error));
       },
