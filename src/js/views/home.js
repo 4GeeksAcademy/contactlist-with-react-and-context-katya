@@ -8,8 +8,8 @@ import "../../styles/home.css";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
-  /*{store.demo.map((item, index) => {})*/
-
+  
+  console.log(store.contact)
   return (
     <div>
       <nav className="navbar navbar-light mb-3 ">
@@ -20,7 +20,15 @@ export const Home = () => {
         </div>
       </nav>
       <div className="d-flex justify-content-center mt-3">
-        <ContactCard />
+        {store.contact.map((contact, index) => (
+          <ContactCard
+            name={contact.name}
+            email={contact.email}
+            phone={contact.phone}
+            address={contact.address}
+            key={index}
+          />
+        ))}
       </div>
     </div>
   );

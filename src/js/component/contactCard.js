@@ -1,7 +1,8 @@
 import React, { Component, useState, useEffect, useContext } from "react";
+import PropTypes from 'prop-types';
 import { Context } from "../store/appContext";
 
-export const ContactCard = () => {
+export const ContactCard = (props) => {
   const { store, actions } = useContext(Context);
 
   return (
@@ -17,31 +18,31 @@ export const ContactCard = () => {
         </div>
         <div className="col-md-6">
           <div className="card-body">
-            <h5 className="card-title mb-3">{store.contact[0].name}</h5>
+            <h5 className="card-title mb-3">{props.name}</h5>
             <div className="card-text text-muted">
               <p className="mb-1">
                 {" "}
                 <i className="fas fa-map-marker-alt me-2"></i>
-                {store.contact[0].address}
+                {props.address}
               </p>
               <p className="mb-1">
                 {" "}
                 <i className="fas fa-phone me-2"></i>
-                {store.contact[0].phone}
+                {props.phone}
               </p>
               <p className="mb-1">
                 {" "}
                 <i className="fas fa-envelope me-2"></i>
-                {store.contact[0].email}
+                {props.email}
               </p>
             </div>
           </div>
         </div>
         <div className="col-md-2 mt-3 d-flex justify-content-end align-items-start">
-          <button type="button" className="btn">
+          <button onClick={() => actions.editContact()} type="button" className="btn">
             <i className="fas fa-pencil-alt"></i>
           </button>
-          <button type="button" className="btn me-4">
+          <button onClick={() => actions.deleteContact()} type="button" className="btn me-4">
             <i className="fas fa-trash"></i>
           </button>
         </div>
@@ -49,3 +50,10 @@ export const ContactCard = () => {
     </div>
   );
 };
+
+ContactCard.propTypes = {
+  name: PropTypes.string,
+  email: PropTypes.string,
+  phone: PropTypes.string,
+  address: PropTypes.string,
+}
