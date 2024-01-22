@@ -1,19 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      demo: [
-        {
-          title: "FIRST",
-          background: "white",
-          initial: "white",
-        },
-        {
-          title: "SECOND",
-          background: "white",
-          initial: "white",
-        },
-      ],
-      /*contacts: [],*/
+      
+      contacts: [],
       contact: [
         {
           name: "Helen Anamendolla",
@@ -24,17 +13,20 @@ const getState = ({ getStore, getActions, setStore }) => {
             "https://img.freepik.com/premium-photo/closeup-portrait-model-with-dramatic-lighting-melancholic-expressions-ai-generated_834670-164.jpg",
         },
       ],
+      inputs: [
+        {
+          inputName: "",
+          inputEmail: "",
+          inputPhone: "",
+          inputAddress: "",
+        }
+      ]
     },
     actions: {
-      // Use getActions to call a function within a fuction
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
-      },
+      
       loadSomeData: () => {
-        /**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-					
-					fetch("https://playground.4geeks.com/apis/fake/contact/agenda")
+      
+				fetch("https://playground.4geeks.com/apis/fake/contact/agenda/agenda_katya")
 				.then((response) => {
 					if(!response.ok) {
 						throw Error(response.status);
@@ -45,22 +37,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch((error) => {
 					console.log(error)
 				})
-				*/
+				
       },
-      changeColor: (index, color) => {
-        //get the store
-        const store = getStore();
+     
+      addContact: () => {
 
-        //we have to loop the entire demo array to look for the respective index
-        //and change its color
-        const demo = store.demo.map((elm, i) => {
-          if (i === index) elm.background = color;
-          return elm;
-        });
+        getStore()
 
-        //reset the global store
-        setStore({ demo: demo });
-      },
+        fetch("https://playground.4geeks.com/apis/fake/contact/", {
+          method: "POST",
+          body: {
+            "full_name": store.inputs.inputName,
+            "email": store.inputs.inputEmail,
+            "agenda_slug": "agenda_katya",
+            "address": store.inputs.inputAddress,
+            "phone": store.inputs.inputPhone,
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw Error(response.status)
+          }
+          return response.json();
+        })
+        .catch((error) => console.log(error))
+      }
     },
   };
 };

@@ -7,6 +7,24 @@ import "../../styles/demo.css";
 
 export const AddNewContact = () => {
   const { store, actions } = useContext(Context);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+
+  function saveContact() {
+
+    actions.setStore({
+      inputs: {
+        inputName: name,
+        inputEmail: email,
+        inputPhone: phone,
+        inputAddress: address,
+      },
+    });
+
+    actions.addContact();
+  }
 
   return (
     <div className="d-flex justify-content-center">
@@ -25,6 +43,8 @@ export const AddNewContact = () => {
               className="form-control"
               id="nameInput"
               placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -36,6 +56,8 @@ export const AddNewContact = () => {
               className="form-control"
               id="emailInput"
               placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -47,6 +69,8 @@ export const AddNewContact = () => {
               className="form-control"
               id="phoneInput"
               placeholder="Enter phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -58,13 +82,18 @@ export const AddNewContact = () => {
               className="form-control"
               id="addressInput"
               placeholder="Enter address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
             />
           </div>
         </div>
-        <br />
-        <Link to="/">
-          <button className="btn btn-primary">Back to Contacts</button>
-        </Link>
+      
+        <div className="d-flex justify-content-center">
+          <button onClick={saveContact} className="btn btn-success mx-3 px-4">Save</button>
+          <Link to="/">
+            <button className="btn btn-primary mx-3">Back to Contacts</button>
+          </Link>
+        </div>
       </div>
     </div>
   );
