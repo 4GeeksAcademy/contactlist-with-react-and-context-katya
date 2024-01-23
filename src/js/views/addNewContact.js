@@ -13,13 +13,19 @@ export const AddNewContact = () => {
   const [address, setAddress] = useState("");
 
   function saveContact() {
-    actions.addContact(name, email, phone, address);
-    alert(`${name} has been added to your contacts`)
-    setName("");
-    setEmail("");
-    setPhone("");
-    setAddress("");
-  };
+    if (
+      !(name.trim() && email.trim() && phone.trim() && address.trim())
+    ) {
+      alert("Please enter contact information");
+    } else {
+      actions.addContact(name, email, phone, address);
+      alert(`${name} has been added to your contacts`);
+      setName("");
+      setEmail("");
+      setPhone("");
+      setAddress("");
+    }
+  }
 
   return (
     <div className="d-flex justify-content-center">
@@ -60,7 +66,7 @@ export const AddNewContact = () => {
               Phone
             </label>
             <input
-              type="email"
+              type="phone"
               className="form-control"
               id="phoneInput"
               placeholder="Enter phone"
@@ -73,7 +79,7 @@ export const AddNewContact = () => {
               Address
             </label>
             <input
-              type="email"
+              type="text"
               className="form-control"
               id="addressInput"
               placeholder="Enter address"
@@ -82,9 +88,11 @@ export const AddNewContact = () => {
             />
           </div>
         </div>
-      
+
         <div className="d-flex justify-content-center">
-          <button onClick={saveContact} className="btn btn-success mx-3 px-4">Save</button>
+          <button onClick={saveContact} className="btn btn-success mx-3 px-4">
+            Save
+          </button>
           <Link to="/">
             <button className="btn btn-primary mx-3">Back to Contacts</button>
           </Link>

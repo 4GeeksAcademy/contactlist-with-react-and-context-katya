@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect, useContext } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 export const ContactCard = (props) => {
   const { store, actions } = useContext(Context);
@@ -39,12 +40,62 @@ export const ContactCard = (props) => {
           </div>
         </div>
         <div className="col-md-2 mt-3 d-flex justify-content-end align-items-start">
-          <button onClick={() => actions.editContact()} type="button" className="btn">
+          <button
+            onClick={() => actions.editContact()}
+            type="button"
+            className="btn"
+          >
             <i className="fas fa-pencil-alt"></i>
           </button>
-          <button onClick={() => actions.deleteContact(props.id)} type="button" className="btn me-4">
+          <button
+            type="button"
+            className="btn me-4"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteAlert"
+          >
             <i className="fas fa-trash"></i>
           </button>
+          <div
+            className="modal fade"
+            id="deleteAlert"
+            tabindex="-1"
+            aria-labelledby="deleteAlertLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="deleteAlertLabel">
+                    Are you sure?
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  {props.name} will be erased permanently
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    onClick={() => actions.deleteContact(props.id)}
+                  >
+                    Delete
+                  </button>
+                  <Link to="/">
+                    <button type="button" className="btn btn-primary">
+                      Back to contacts
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -54,6 +105,6 @@ export const ContactCard = (props) => {
 ContactCard.propTypes = {
   name: PropTypes.string,
   email: PropTypes.string,
-  phone: PropTypes.string,
+  phone: PropTypes.number,
   address: PropTypes.string,
-}
+};
