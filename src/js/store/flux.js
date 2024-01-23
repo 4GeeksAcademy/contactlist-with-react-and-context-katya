@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       addContact: (name, email, phone, address) => {
         const store = getStore();
 
-        if (store.contacts.some((contact) => contact.email === email)) {
+        if (store.contacts.some((contact) => contact.email === email || contact.phone === phone)) {
           setStore({ contactExists: true });
           alert(`${name} is already in your contacts`);
         } else {
@@ -72,8 +72,31 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      editContact: () => {
+      editContact: (name, email, phone, address, id) => {
         console.log("This will edit a contact");
+        fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+              full_name: name,
+              email: email,
+              agenda_slug: "agenda_katya",
+              address: address,
+              phone: phone,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw Error(response.status);
+              }
+              return response.json();
+            })
+            .then(() => {
+              alert(`${name} has been updated`);
+            })
+            .catch((error) => console.log(error));
       },
 
       openContact: (id) => {

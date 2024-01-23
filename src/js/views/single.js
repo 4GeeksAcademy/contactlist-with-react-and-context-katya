@@ -5,7 +5,22 @@ import { ContactCard } from "../component/contactCard";
 
 export const Single = () => {
   const { store, actions } = useContext(Context);
+  const [name, setName] = useState(store.singleContact.full_name || "");
+  const [email, setEmail] = useState(store.singleContact.email || "");
+  const [phone, setPhone] = useState(store.singleContact.phone || "");
+  const [address, setAddress] = useState(store.singleContact.address || "");
   const params = useParams();
+
+  function updateContact() {
+	if (
+		!(name.trim() && email.trim() && phone.trim() && address.trim())
+	  ) {
+		alert("Please enter contact information");
+	  } else {
+		actions.editContact(name, email, phone, address, store.singleContact.id)
+	  }
+
+  }
 
   return (
     <div className="d-flex justify-content-center mt-3">
@@ -31,7 +46,8 @@ export const Single = () => {
               className="form-control"
               id="nameInput"
               placeholder="Full Name"
-              value={store.singleContact.full_name}
+              value={name}
+			  onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -43,7 +59,8 @@ export const Single = () => {
               className="form-control"
               id="emailInput"
               placeholder="Enter email"
-              value={store.singleContact.email}
+              value={email}
+			  onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -55,7 +72,8 @@ export const Single = () => {
               className="form-control"
               id="phoneInput"
               placeholder="Enter phone"
-              value={store.singleContact.phone}
+              value={phone}
+			  onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -67,12 +85,13 @@ export const Single = () => {
               className="form-control"
               id="addressInput"
               placeholder="Enter address"
-              value={store.singleContact.address}
+              value={address}
+			  onChange={(e) => setAddress(e.target.value)}
             />
           </div>
         </div>
 		<div className="d-flex justify-content-center">
-          <button className="btn btn-success mx-3 px-4">
+          <button onClick={updateContact} className="btn btn-success mx-3 px-4">
             Save changes
           </button>
           <Link to="/">
