@@ -45,7 +45,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             return response.json();
           })
           .then(() => {
-            
             const store = getStore();
             setStore({
               contacts: store.contacts.concat([
@@ -66,12 +65,23 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("Thiw will edit a contact");
       },
 
-      deleteContact: () => {
+      deleteContact: (id) => {
         console.log("Thiw will delete a contact");
-      },
+        const store = getStore();
+        setStore({
+          contacts: store.contacts.filter((contact) => contact.id !== id),
+        });
 
-      setStore: (newState) => {
-        setStore(newState);
+        fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw Error(response.status);
+            }
+            return response.json();
+          })
+          .catch((error) => console.log(error));
       },
     },
   };

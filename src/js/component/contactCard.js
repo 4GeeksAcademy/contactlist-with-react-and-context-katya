@@ -42,7 +42,7 @@ export const ContactCard = (props) => {
           <button onClick={() => actions.editContact()} type="button" className="btn">
             <i className="fas fa-pencil-alt"></i>
           </button>
-          <button onClick={() => actions.deleteContact()} type="button" className="btn me-4">
+          <button onClick={() => actions.deleteContact(props.id)} type="button" className="btn me-4">
             <i className="fas fa-trash"></i>
           </button>
         </div>
