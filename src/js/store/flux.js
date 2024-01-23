@@ -93,6 +93,22 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.log(error));
       },
+
+      deleteAllContacts: () => {
+        
+        const store = getStore();
+        setStore({contacts: []})
+        fetch(`https://playground.4geeks.com/apis/fake/contact/agenda/agenda_katya`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw Error(response.status);
+            }
+            return response.json();
+          })
+          .catch((error) => console.log(error));
+      },
     },
   };
 };
