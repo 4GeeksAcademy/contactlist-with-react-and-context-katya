@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
@@ -25,7 +25,7 @@ export const AddNewContact = () => {
       setPhone("");
       setAddress("");
     }
-  }
+  };
 
   return (
     <div className="d-flex justify-content-center">

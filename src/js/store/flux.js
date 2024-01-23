@@ -2,13 +2,14 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       contacts: [],
-
+      loading: true,
       photo:
         "https://img.freepik.com/premium-photo/closeup-portrait-model-with-dramatic-lighting-melancholic-expressions-ai-generated_834670-164.jpg",
     },
 
     actions: {
       loadSomeData: () => {
+        
         fetch(
           "https://playground.4geeks.com/apis/fake/contact/agenda/agenda_katya"
         )
@@ -18,7 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
             return response.json();
           })
-          .then((data) => setStore({ contacts: data }))
+          .then((data) => setStore({ contacts: data, loading: false }))
           .catch((error) => {
             console.log(error);
           });

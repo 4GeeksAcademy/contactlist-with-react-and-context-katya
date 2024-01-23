@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
@@ -58,7 +58,7 @@ export const ContactCard = (props) => {
           <div
             className="modal fade"
             id="deleteAlert"
-            tabindex="-1"
+            tabIndex="-1"
             aria-labelledby="deleteAlertLabel"
             aria-hidden="true"
           >
@@ -80,18 +80,19 @@ export const ContactCard = (props) => {
                 </div>
                 <div className="modal-footer">
                   <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
                     onClick={() => actions.deleteContact(props.id)}
+                    type="button"
+                    className="btn btn-danger"
                   >
                     Delete
                   </button>
-                  <Link to="/">
-                    <button type="button" className="btn btn-primary">
-                      Back to contacts
-                    </button>
-                  </Link>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
                 </div>
               </div>
             </div>
@@ -105,6 +106,6 @@ export const ContactCard = (props) => {
 ContactCard.propTypes = {
   name: PropTypes.string,
   email: PropTypes.string,
-  phone: PropTypes.number,
+  phone: PropTypes.string,
   address: PropTypes.string,
 };

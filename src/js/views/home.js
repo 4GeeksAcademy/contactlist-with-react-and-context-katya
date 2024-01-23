@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { ContactCard } from "../component/contactCard";
 import { Link } from "react-router-dom";
 
@@ -12,24 +12,31 @@ export const Home = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-light mb-3 justify-content-center">
-        <div style={{ width: "1030px" }} className="d-flex">
-          <Link to="/addnewcontact">
-            <button className="btn btn-success me-5">Add a new contact</button>
-          </Link>
-        </div>
-      </nav>
-      {store.contacts.map((contact, index) => (
-        <div key={index} className="d-flex justify-content-center mt-3">
-          <ContactCard
-            name={contact.full_name}
-            email={contact.email}
-            phone={contact.phone}
-            address={contact.address}
-            id={contact.id}
-          />
-        </div>
-      ))}
-    </div>
+    {store.loading ? (
+      <p>Loading...</p>
+    ) : (
+      <>
+        <nav className="navbar navbar-light mb-3 justify-content-center">
+          <div style={{ width: "1030px" }} className="d-flex">
+            <Link to="/addnewcontact">
+              <button className="btn btn-success me-5">Add a new contact</button>
+            </Link>
+          </div>
+        </nav>
+
+        {store.contacts.map((contact, index) => (
+          <div key={index} className="d-flex justify-content-center mt-3">
+            <ContactCard
+              name={contact.full_name}
+              email={contact.email}
+              phone={contact.phone}
+              address={contact.address}
+              id={contact.id}
+            />
+          </div>
+        ))}
+      </>
+    )}
+  </div>
   );
 };
