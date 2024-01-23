@@ -12,14 +12,18 @@ export const Single = () => {
   const params = useParams();
 
   function updateContact() {
-	if (
-		!(name.trim() && email.trim() && phone.trim() && address.trim())
-	  ) {
-		alert("Please enter contact information");
-	  } else {
-		actions.editContact(name, email, phone, address, store.singleContact.id)
-	  }
-
+    if (!(name.trim() && email.trim() && phone.trim() && address.trim())) {
+      alert("Please enter contact information");
+    } else if (
+      name === store.singleContact.full_name &&
+      email === store.singleContact.email &&
+      phone === store.singleContact.phone &&
+      address === store.singleContact.address
+    ) {
+      alert("No changes detected");
+    } else {
+      actions.editContact(name, email, phone, address, store.singleContact.id);
+    }
   }
 
   return (
@@ -47,7 +51,7 @@ export const Single = () => {
               id="nameInput"
               placeholder="Full Name"
               value={name}
-			  onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -60,7 +64,7 @@ export const Single = () => {
               id="emailInput"
               placeholder="Enter email"
               value={email}
-			  onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -73,7 +77,7 @@ export const Single = () => {
               id="phoneInput"
               placeholder="Enter phone"
               value={phone}
-			  onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -86,16 +90,21 @@ export const Single = () => {
               id="addressInput"
               placeholder="Enter address"
               value={address}
-			  onChange={(e) => setAddress(e.target.value)}
+              onChange={(e) => setAddress(e.target.value)}
             />
           </div>
         </div>
-		<div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center">
           <button onClick={updateContact} className="btn btn-success mx-3 px-4">
             Save changes
           </button>
           <Link to="/">
-            <button onClick={actions.changeView} className="btn btn-primary mx-3">Back to Contacts</button>
+            <button
+              onClick={actions.changeView}
+              className="btn btn-primary mx-3"
+            >
+              Back to Contacts
+            </button>
           </Link>
         </div>
       </div>

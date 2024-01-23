@@ -30,9 +30,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       addContact: (name, email, phone, address) => {
         const store = getStore();
 
-        if (store.contacts.some((contact) => contact.email === email || contact.phone === phone)) {
+        if (store.contacts.some((contact) => contact.phone === phone)) {
           setStore({ contactExists: true });
-          alert(`${name} is already in your contacts`);
+          alert(`${phone} already exists in your contacts`);
+        } else if (store.contacts.some((contact) => contact.phone === phone)) {
+          setStore({ contactExists: true });
+          alert(`${email} already exists in your contacts`);
         } else {
           setStore({ contactExists: false });
           fetch("https://playground.4geeks.com/apis/fake/contact/", {
