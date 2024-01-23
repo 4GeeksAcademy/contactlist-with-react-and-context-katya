@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
 
 export const ContactCard = (props) => {
   const { store, actions } = useContext(Context);
@@ -51,15 +50,15 @@ export const ContactCard = (props) => {
             type="button"
             className="btn me-4"
             data-bs-toggle="modal"
-            data-bs-target="#deleteAlert"
+            data-bs-target={`#deleteAlert-${props.id}`}
           >
             <i className="fas fa-trash"></i>
           </button>
           <div
-            className="modal fade"
-            id="deleteAlert"
+            className="modal"
+            id={`deleteAlert-${props.id}`}
             tabIndex="-1"
-            aria-labelledby="deleteAlertLabel"
+            aria-labelledby={`deleteAlertLabel-${props.id}`}
             aria-hidden="true"
           >
             <div className="modal-dialog">
@@ -80,7 +79,7 @@ export const ContactCard = (props) => {
                 </div>
                 <div className="modal-footer">
                   <button
-                    onClick={() => actions.deleteContact(props.id)}
+                    onClick={() => actions.deleteContact(props.id, props.index)}
                     type="button"
                     className="btn btn-danger"
                   >

@@ -17,9 +17,8 @@ export const AddNewContact = () => {
       !(name.trim() && email.trim() && phone.trim() && address.trim())
     ) {
       alert("Please enter contact information");
-    } else {
+    } else if (!store.contactExists) {
       actions.addContact(name, email, phone, address);
-      alert(`${name} has been added to your contacts`);
       setName("");
       setEmail("");
       setPhone("");

@@ -9,7 +9,7 @@ import "../../styles/home.css";
 export const Home = () => {
 
   const { store, actions } = useContext(Context);
-
+  
   return (
     <div>
     {store.loading ? (
@@ -17,25 +17,28 @@ export const Home = () => {
     ) : (
       <>
         <nav className="navbar navbar-light mb-3 justify-content-center">
-          <div style={{ width: "1030px" }} className="d-flex">
+          <div style={{ width: "1030px" }} className="d-flex justify-content-between">
             <Link to="/addnewcontact">
-              <button className="btn btn-success me-5">Add a new contact</button>
+              <button className="btn btn-success">Add a new contact</button>
             </Link>
+            <button className="btn btn-danger">Delete all contacts</button>
           </div>
         </nav>
 
         {store.contacts.map((contact, index) => (
-          <div key={index} className="d-flex justify-content-center mt-3">
+          <div key={contact.id} className="d-flex justify-content-center mt-3">
             <ContactCard
               name={contact.full_name}
               email={contact.email}
               phone={contact.phone}
               address={contact.address}
               id={contact.id}
+              index={index}
             />
           </div>
         ))}
       </>
+      
     )}
   </div>
   );
