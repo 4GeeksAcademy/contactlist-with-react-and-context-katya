@@ -95,7 +95,7 @@ export const Single = () => {
             Save changes
           </button>
           <Link to="/">
-            <button className="btn btn-primary mx-3">Back to Contacts</button>
+            <button onClick={actions.changeView} className="btn btn-primary mx-3">Back to Contacts</button>
           </Link>
         </div>
       </div>

@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       contacts: [],
       singleContact: [],
+      isInSingleView: false,
       loading: true,
       contactExists: false,
       photo:
@@ -108,11 +109,15 @@ const getState = ({ getStore, getActions, setStore }) => {
             return response.json();
           })
           .then((contact) => {
-            setStore({singleContact: contact})
+            setStore({singleContact: contact, isInSingleView: true})
           })
           .catch((error) => {
             console.log(error);
           });
+      },
+
+      changeView: () => {
+        setStore({isInSingleView: false})
       },
 
       deleteContact: (id, index) => {

@@ -39,12 +39,13 @@ export const ContactCard = (props) => {
             </div>
           </div>
         </div>
-        <div className="col-md-2 mt-3 d-flex justify-content-end align-items-start">
-          <Link to={`/single/${props.id}`}>
+        <div className="col-md-2 mt-3 d-flex justify-content-end align-items-start"> 
+        {!store.isInSingleView && (<Link to={`/single/${props.id}`}>
             <button onClick={() => {actions.openContact(props.id)}} type="button" className="btn">
               <i className="fas fa-pencil-alt"></i>
             </button>
-          </Link>
+          </Link>)}
+          
 
           <button
             type="button"
