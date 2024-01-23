@@ -14,7 +14,12 @@ export const AddNewContact = () => {
 
   function saveContact() {
     actions.addContact(name, email, phone, address);
-  }
+    alert(`${name} has been added to your contacts`)
+    setName("");
+    setEmail("");
+    setPhone("");
+    setAddress("");
+  };
 
   return (
     <div className="d-flex justify-content-center">
