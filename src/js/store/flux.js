@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       contacts: [],
+      singleContact: [],
       loading: true,
       contactExists: false,
       photo:
@@ -29,11 +30,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         const store = getStore();
 
         if (store.contacts.some((contact) => contact.email === email)) {
-          setStore({contactExists: true})
+          setStore({ contactExists: true });
           alert(`${name} is already in your contacts`);
-          
         } else {
-          setStore({contactExists: false})
+          setStore({ contactExists: false });
           fetch("https://playground.4geeks.com/apis/fake/contact/", {
             method: "POST",
             body: JSON.stringify({
@@ -76,6 +76,22 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("This will edit a contact");
       },
 
+      openContact: (id) => {
+        fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw Error(response.status);
+            }
+            return response.json();
+          })
+          .then((contact) => {
+            setStore({singleContact: contact})
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+
       deleteContact: (id, index) => {
         const store = getStore();
 
@@ -96,12 +112,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       deleteAllContacts: () => {
-        
         const store = getStore();
-        setStore({contacts: []})
-        fetch(`https://playground.4geeks.com/apis/fake/contact/agenda/agenda_katya`, {
-          method: "DELETE",
-        })
+        setStore({ contacts: [] });
+        fetch(
+          `https://playground.4geeks.com/apis/fake/contact/agenda/agenda_katya`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((response) => {
             if (!response.ok) {
               throw Error(response.status);

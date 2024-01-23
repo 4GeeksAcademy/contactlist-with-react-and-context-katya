@@ -1,26 +1,85 @@
 import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { ContactCard } from "../component/contactCard";
 
-export const Single = props => {
-	const { store, actions } = useContext(Context);
-	const params = useParams();
-	return (
-		<div className="jumbotron">
-			<h1 className="display-4">This will show the demo element: {store.demo[params.theid].title}</h1>
+export const Single = () => {
+  const { store, actions } = useContext(Context);
+  const params = useParams();
 
-			<hr className="my-4" />
+  return (
+    <div className="d-flex justify-content-center mt-3">
+      <div className="d-flex flex-column m-3 justify-content-center align-items-center">
+        <ContactCard
+          name={store.singleContact.full_name}
+          email={store.singleContact.email}
+          phone={store.singleContact.phone}
+          address={store.singleContact.address}
+          id={store.singleContact.id}
+        />
 
-			<Link to="/">
-				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Back home
-				</span>
-			</Link>
-		</div>
-	);
-};
-
-Single.propTypes = {
-	match: PropTypes.object
+        <div
+          className="input-group m-3 d-flex flex-column"
+          style={{ width: "1030px" }}
+        >
+          <div className="mb-3">
+            <label htmlFor="nameInput" className="form-label">
+              Full Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="nameInput"
+              placeholder="Full Name"
+              value={store.singleContact.full_name}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="emailInput" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="emailInput"
+              placeholder="Enter email"
+              value={store.singleContact.email}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="phoneInput" className="form-label">
+              Phone
+            </label>
+            <input
+              type="phone"
+              className="form-control"
+              id="phoneInput"
+              placeholder="Enter phone"
+              value={store.singleContact.phone}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="addressInput" className="form-label">
+              Address
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="addressInput"
+              placeholder="Enter address"
+              value={store.singleContact.address}
+            />
+          </div>
+        </div>
+		<div className="d-flex justify-content-center">
+          <button className="btn btn-success mx-3 px-4">
+            Save changes
+          </button>
+          <Link to="/">
+            <button className="btn btn-primary mx-3">Back to Contacts</button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 };

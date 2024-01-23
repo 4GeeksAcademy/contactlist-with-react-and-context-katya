@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 export const ContactCard = (props) => {
   const { store, actions } = useContext(Context);
@@ -39,13 +40,12 @@ export const ContactCard = (props) => {
           </div>
         </div>
         <div className="col-md-2 mt-3 d-flex justify-content-end align-items-start">
-          <button
-            onClick={() => actions.editContact()}
-            type="button"
-            className="btn"
-          >
-            <i className="fas fa-pencil-alt"></i>
-          </button>
+          <Link to={`/single/${props.id}`}>
+            <button onClick={() => {actions.openContact(props.id)}} type="button" className="btn">
+              <i className="fas fa-pencil-alt"></i>
+            </button>
+          </Link>
+
           <button
             type="button"
             className="btn me-4"
