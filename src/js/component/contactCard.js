@@ -82,6 +82,7 @@ export const ContactCard = (props) => {
                     onClick={() => actions.deleteContact(props.id, props.index)}
                     type="button"
                     className="btn btn-danger"
+                    data-bs-dismiss="modal"
                   >
                     Delete
                   </button>
