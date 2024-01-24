@@ -1,39 +1,52 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext} from "react";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { ContactCard } from "../component/contactCard";
 
 export const Single = () => {
   const { store, actions } = useContext(Context);
-  const [name, setName] = useState(store.singleContact.full_name || "");
-  const [email, setEmail] = useState(store.singleContact.email || "");
-  const [phone, setPhone] = useState(store.singleContact.phone || "");
-  const [address, setAddress] = useState(store.singleContact.address || "");
   const params = useParams();
+  const { full_name, email, phone, address, id } = store.singleContact;
+  const [inputName, setInputName] = useState(full_name || "");
+  const [inputEmail, setInputEmail] = useState(email || "");
+  const [inputPhone, setInputPhone] = useState(phone || "");
+  const [inputAddress, setInputAddress] = useState(address || "");
+  
 
   function updateContact() {
-    if (!(name.trim() && email.trim() && phone.trim() && address.trim())) {
+    if (!(inputName.trim() && inputEmail.trim() && inputPhone.trim() && inputAddress.trim())) {
       alert("Please enter contact information");
     } else if (
-      name === store.singleContact.full_name &&
-      email === store.singleContact.email &&
-      phone === store.singleContact.phone &&
-      address === store.singleContact.address
+      inputName === full_name &&
+      inputEmail === email &&
+      inputPhone === phone &&
+      inputAddress === address
     ) {
       alert("No changes detected");
     } else {
-      actions.editContact(name, email, phone, address, store.singleContact.id);
+      actions.editContact(
+        inputName,
+        inputEmail,
+        inputPhone,
+        inputAddress,
+        id
+      );
     }
+  }
+
+  if (!id) {
+    console.log("I am stuck")
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="d-flex justify-content-center mt-3">
       <div className="d-flex flex-column m-3 justify-content-center align-items-center">
         <ContactCard
-          name={store.singleContact.full_name}
-          email={store.singleContact.email}
-          phone={store.singleContact.phone}
-          address={store.singleContact.address}
+          name={full_name}
+          email={email}
+          phone={phone}
+          address={address}
           id={store.singleContact.id}
         />
 
@@ -49,9 +62,9 @@ export const Single = () => {
               type="text"
               className="form-control"
               id="nameInput"
-              placeholder="Full Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder={full_name}
+              value={inputName}
+              onChange={(e) => setInputName(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -63,8 +76,8 @@ export const Single = () => {
               className="form-control"
               id="emailInput"
               placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={inputEmail}
+              onChange={(e) => setInputEmail(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -76,8 +89,8 @@ export const Single = () => {
               className="form-control"
               id="phoneInput"
               placeholder="Enter phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              value={inputPhone}
+              onChange={(e) => setInputPhone(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -89,8 +102,8 @@ export const Single = () => {
               className="form-control"
               id="addressInput"
               placeholder="Enter address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              value={inputAddress}
+              onChange={(e) => setInputAddress(e.target.value)}
             />
           </div>
         </div>

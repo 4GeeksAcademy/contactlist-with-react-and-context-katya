@@ -33,9 +33,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (store.contacts.some((contact) => contact.phone === phone)) {
           setStore({ contactExists: true });
           alert(`${phone} already exists in your contacts`);
+          setStore({ contactExists: false });
         } else if (store.contacts.some((contact) => contact.phone === phone)) {
           setStore({ contactExists: true });
           alert(`${email} already exists in your contacts`);
+          setStore({ contactExists: false });
         } else {
           setStore({ contactExists: false });
           fetch("https://playground.4geeks.com/apis/fake/contact/", {
@@ -139,6 +141,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
             return response.json();
           })
+         /* .then(() => {
+            if (store.isInSingleView) {
+              actions.changeView();
+              history.push("/");
+            }
+          })*/
           .catch((error) => console.log(error));
       },
 
