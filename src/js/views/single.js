@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useContext} from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { ContactCard } from "../component/contactCard";
 
 export const Single = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
-  const { full_name, email, phone, address, id } = store.singleContact;
-  const [inputName, setInputName] = useState(full_name || "");
-  const [inputEmail, setInputEmail] = useState(email || "");
-  const [inputPhone, setInputPhone] = useState(phone || "");
-  const [inputAddress, setInputAddress] = useState(address || "");
+  /*const { full_name, email, phone, address, id } = store.singleContact;*/
+  const [inputName, setInputName] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
+  const [inputPhone, setInputPhone] = useState("");
+  const [inputAddress, setInputAddress] = useState("");
   
+  useEffect(() => {
+    actions.openContact(params.id, setInputEmail)
+  }, [])
 
   function updateContact() {
     if (!(inputName.trim() && inputEmail.trim() && inputPhone.trim() && inputAddress.trim())) {
@@ -34,21 +37,18 @@ export const Single = () => {
     }
   }
 
-  if (!id) {
-    console.log("I am stuck")
-    return <div>Loading...</div>;
-  }
+  
 
   return (
     <div className="d-flex justify-content-center mt-3">
       <div className="d-flex flex-column m-3 justify-content-center align-items-center">
-        <ContactCard
+      {/*  <ContactCard
           name={full_name}
           email={email}
           phone={phone}
           address={address}
           id={store.singleContact.id}
-        />
+  />*/}
 
         <div
           className="input-group m-3 d-flex flex-column"
@@ -62,7 +62,7 @@ export const Single = () => {
               type="text"
               className="form-control"
               id="nameInput"
-              placeholder={full_name}
+              
               value={inputName}
               onChange={(e) => setInputName(e.target.value)}
             />

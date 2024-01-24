@@ -2,7 +2,6 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       contacts: [],
-      singleContact: [],
       isInSingleView: false,
       loading: true,
       contactExists: false,
@@ -105,7 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             .catch((error) => console.log(error));
       },
 
-      openContact: (id) => {
+      openContact: (id, setInputEmail) => {
         fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`)
           .then((response) => {
             if (!response.ok) {
@@ -114,7 +113,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             return response.json();
           })
           .then((contact) => {
-            setStore({singleContact: contact, isInSingleView: true})
+            setStore({isInSingleView: true})
+            setInputEmail(contact.email)
           })
           .catch((error) => {
             console.log(error);
