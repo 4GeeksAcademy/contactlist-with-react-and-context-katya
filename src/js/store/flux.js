@@ -33,12 +33,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ contactExists: true });
           alert(`${phone} already exists in your contacts`);
           setStore({ contactExists: false });
-        } else if (store.contacts.some((contact) => contact.phone === phone)) {
+        } else if (store.contacts.some((contact) => contact.email === email)) {
           setStore({ contactExists: true });
           alert(`${email} already exists in your contacts`);
           setStore({ contactExists: false });
         } else {
           setStore({ contactExists: false });
+
           fetch("https://playground.4geeks.com/apis/fake/contact/", {
             method: "POST",
             body: JSON.stringify({
@@ -77,8 +78,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      editContact: (name, email, phone, address, id) => {
-        
+      editContact: (name, email, phone, address, id, navigate) => {
+        const actions = getActions();
+        const store = getStore();
+
+
         fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`, {
           method: "PUT",
           body: JSON.stringify({
@@ -99,7 +103,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return response.json();
           })
           .then(() => {
-            const store = getStore();
+            
             setStore({
               full_name: name,
               email: email,
@@ -107,7 +111,9 @@ const getState = ({ getStore, getActions, setStore }) => {
               address: address,
               phone: phone,
             });
+            actions.loadSomeData();
             alert(`${name} has been updated`);
+            navigate();
           })
           .catch((error) => console.log(error));
       },
@@ -127,7 +133,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return response.json();
           })
           .then((contact) => {
-            setStore({ isInSingleView: true });
+            setStore({ isInSingleView: true, loading: false });
             setInputName(contact.full_name);
             setInputEmail(contact.email);
             setInputPhone(contact.phone);
@@ -144,10 +150,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteContact: (id, index, navigate) => {
         const store = getStore();
-
-        setStore({
-          contacts: store.contacts.filter((contact, i) => index !== i),
-        });
+        const actions = getActions();
 
         fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`, {
           method: "DELETE",
@@ -158,9 +161,15 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
             return response.json();
           })
+          .then(() => {
+            setStore({
+              contacts: store.contacts.filter((contact, i) => index !== i),
+            });
+          })
           .catch((error) => console.log(error));
 
         if (store.isInSingleView) {
+          actions.loadSomeData();
           navigate();
         }
       },
