@@ -11,7 +11,7 @@ export const Home = () => {
 
   useEffect(() => {
     actions.loadSomeData();
-  }, []);
+  }, [store.contacts]);
   
   return (
     <div>
