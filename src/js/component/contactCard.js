@@ -1,10 +1,16 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 export const ContactCard = (props) => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+
+  function navigateBack() {
+    actions.changeView();
+    navigate("/");
+  }
 
   return (
     <div className="card mb-3" style={{ width: "1030px" }}>
@@ -80,7 +86,7 @@ export const ContactCard = (props) => {
                 </div>
                 <div className="modal-footer">
                   <button
-                    onClick={() => actions.deleteContact(props.id, props.index)}
+                    onClick={() => actions.deleteContact(props.id, props.index, navigateBack)}
                     type="button"
                     className="btn btn-danger"
                     data-bs-dismiss="modal"

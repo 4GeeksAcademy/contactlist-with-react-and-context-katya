@@ -78,7 +78,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       editContact: (name, email, phone, address, id) => {
-        console.log("This will edit a contact");
+        
         fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`, {
           method: "PUT",
           body: JSON.stringify({
@@ -142,7 +142,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ isInSingleView: false });
       },
 
-      deleteContact: (id, index) => {
+      deleteContact: (id, index, navigate) => {
         const store = getStore();
 
         setStore({
@@ -159,6 +159,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             return response.json();
           })
           .catch((error) => console.log(error));
+
+        if (store.isInSingleView) {
+          navigate();
+        }
       },
 
       deleteAllContacts: () => {

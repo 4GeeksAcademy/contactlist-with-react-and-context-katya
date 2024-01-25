@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useContext} from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { ContactCard } from "../component/contactCard";
 
 export const Single = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
-  const id = params.id
+  const navigate = useNavigate();
   const [inputName, setInputName] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputPhone, setInputPhone] = useState("");
   const [inputAddress, setInputAddress] = useState("");
+
+  const id = params.id;
   
   useEffect(() => {
     actions.openContact(id, setInputName, setInputEmail, setInputPhone, setInputAddress)
@@ -34,6 +36,8 @@ export const Single = () => {
         inputAddress,
         id
       );
+      actions.changeView();
+      navigate("/")
     }
   }
 
