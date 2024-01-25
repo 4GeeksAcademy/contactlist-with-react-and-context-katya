@@ -6,27 +6,27 @@ import { ContactCard } from "../component/contactCard";
 export const Single = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
-  /*const { full_name, email, phone, address, id } = store.singleContact;*/
+  const id = params.id
   const [inputName, setInputName] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputPhone, setInputPhone] = useState("");
   const [inputAddress, setInputAddress] = useState("");
   
   useEffect(() => {
-    actions.openContact(params.id, setInputEmail)
+    actions.openContact(id, setInputName, setInputEmail, setInputPhone, setInputAddress)
   }, [])
 
   function updateContact() {
     if (!(inputName.trim() && inputEmail.trim() && inputPhone.trim() && inputAddress.trim())) {
       alert("Please enter contact information");
-    } else if (
+    } /*else if (
       inputName === full_name &&
       inputEmail === email &&
       inputPhone === phone &&
       inputAddress === address
     ) {
       alert("No changes detected");
-    } else {
+    } */else {
       actions.editContact(
         inputName,
         inputEmail,
@@ -37,18 +37,16 @@ export const Single = () => {
     }
   }
 
-  
-
   return (
     <div className="d-flex justify-content-center mt-3">
       <div className="d-flex flex-column m-3 justify-content-center align-items-center">
-      {/*  <ContactCard
-          name={full_name}
-          email={email}
-          phone={phone}
-          address={address}
-          id={store.singleContact.id}
-  />*/}
+    <ContactCard
+          name={inputName}
+          email={inputEmail}
+          phone={inputPhone}
+          address={inputAddress}
+          id={id}
+  />
 
         <div
           className="input-group m-3 d-flex flex-column"

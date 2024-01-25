@@ -80,31 +80,45 @@ const getState = ({ getStore, getActions, setStore }) => {
       editContact: (name, email, phone, address, id) => {
         console.log("This will edit a contact");
         fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`, {
-            method: "PUT",
-            body: JSON.stringify({
+          method: "PUT",
+          body: JSON.stringify({
+            full_name: name,
+            email: email,
+            agenda_slug: "agenda_katya",
+            address: address,
+            phone: phone,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw Error(response.status);
+            }
+            return response.json();
+          })
+          .then(() => {
+            const store = getStore();
+            setStore({
               full_name: name,
               email: email,
               agenda_slug: "agenda_katya",
               address: address,
               phone: phone,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
+            });
+            alert(`${name} has been updated`);
           })
-            .then((response) => {
-              if (!response.ok) {
-                throw Error(response.status);
-              }
-              return response.json();
-            })
-            .then(() => {
-              alert(`${name} has been updated`);
-            })
-            .catch((error) => console.log(error));
+          .catch((error) => console.log(error));
       },
 
-      openContact: (id, setInputEmail) => {
+      openContact: (
+        id,
+        setInputName,
+        setInputEmail,
+        setInputPhone,
+        setInputAddress
+      ) => {
         fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`)
           .then((response) => {
             if (!response.ok) {
@@ -113,8 +127,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             return response.json();
           })
           .then((contact) => {
-            setStore({isInSingleView: true})
-            setInputEmail(contact.email)
+            setStore({ isInSingleView: true });
+            setInputName(contact.full_name);
+            setInputEmail(contact.email);
+            setInputPhone(contact.phone);
+            setInputAddress(contact.address);
           })
           .catch((error) => {
             console.log(error);
@@ -122,7 +139,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       changeView: () => {
-        setStore({isInSingleView: false})
+        setStore({ isInSingleView: false });
       },
 
       deleteContact: (id, index) => {
@@ -141,12 +158,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
             return response.json();
           })
-         /* .then(() => {
-            if (store.isInSingleView) {
-              actions.changeView();
-              history.push("/");
-            }
-          })*/
           .catch((error) => console.log(error));
       },
 
