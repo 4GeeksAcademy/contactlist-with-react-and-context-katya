@@ -38,10 +38,16 @@ export const Single = () => {
       )
     ) {
       alert("Fill in the empty fields");
+    } else if (
+      inputName === store.originalContact.full_name &&
+      inputEmail === store.originalContact.email &&
+      inputPhone === store.originalContact.phone &&
+      inputAddress === store.originalContact.address
+    ) {
+      alert("No changes detected");
     } else {
       actions.editContact(inputName, inputEmail, inputPhone, inputAddress, id, navigation);
       actions.changeView();
-      
     }
   }
 

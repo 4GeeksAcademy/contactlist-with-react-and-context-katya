@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       contacts: [],
+      originalContact: [],
       isInSingleView: false,
       loading: true,
       contactExists: false,
@@ -133,7 +134,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             return response.json();
           })
           .then((contact) => {
-            setStore({ isInSingleView: true, loading: false });
+            setStore({ isInSingleView: true, loading: false, originalContact: contact });
             setInputName(contact.full_name);
             setInputEmail(contact.email);
             setInputPhone(contact.phone);
