@@ -82,7 +82,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       editContact: (name, email, phone, address, id, navigate) => {
         const actions = getActions();
         const store = getStore();
-
+      /*  if (
+          store.contacts.some(
+            (contact) => (contact.email === email || contact.phone === phone) && contact.id !== id
+          )
+        ) {
+          setStore({ contactExists: true });
+          alert(`Another contact already has the same email or phone`);
+          setStore({ contactExists: false });
+        }*/
 
         fetch(`https://playground.4geeks.com/apis/fake/contact/${id}`, {
           method: "PUT",

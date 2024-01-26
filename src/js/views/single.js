@@ -26,7 +26,7 @@ export const Single = () => {
 
   function navigation() {
     navigate("/");
-  }
+  };
 
   function updateContact() {
     if (
@@ -49,7 +49,7 @@ export const Single = () => {
       actions.editContact(inputName, inputEmail, inputPhone, inputAddress, id, navigation);
       actions.changeView();
     }
-  }
+  };
 
   return (
     <div>
